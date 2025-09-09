@@ -5,6 +5,9 @@ import (
 	"sync"
 )
 
+// Withouth sync.mutex, there will be race condition, if you run code multiple times you'll get different output.
+// fix with sync.mutex, always get output balance : 1000
+
 var balance int = 1000 // shared resource
 var mu sync.Mutex
 
@@ -27,7 +30,6 @@ func withdraw(wg *sync.WaitGroup) {
 		balance = balance - i
 		mu.Unlock()
 	}
-
 }
 
 func main() {
